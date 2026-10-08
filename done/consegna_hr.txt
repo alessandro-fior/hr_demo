@@ -1,0 +1,59 @@
+Ecco il testo contenuto nell'immagine, trascritto e organizzato in modo chiaro seguendo la struttura della tabella e delle sezioni.
+
+Tabella comparativa: SQL vs PL/SQL
+Feature	SQL	PL/SQL
+Full form	Structured Query Language	Procedural Language / SQL
+Purpose	Query & manage data	Add logic around SQL
+Execution	One statement at a time	Whole block at once
+Logic	No loops, no IF-ELSE	Variables, loops, IF-ELSE
+Errors	No built-in error handling	EXCEPTION blocks
+Used for	Reports, analysis, CRUD	Procedures & triggers
+Works in	All relational databases	Oracle database
+① SQL su HR.EMPLOYEES
+Tabella di esempio:
+
+EMP_ID	FIRST_NAME	SALARY	DEPT_ID
+103	Alexander	9000	60
+104	Bruce	6000	60
+105	David	4800	60
+106	Valli	4800	60
+107	Diana	4200	60
+Descrizione: Mostra i dipendenti del dipartimento 60.
+
+Codice SQL:
+
+sql
+SELECT first_name, salary
+FROM employees
+WHERE department_id = 60;
+Nota: Restituisce 5 righe (vedi tabella).
+
+② PL/SQL - Aumento del 10% per il dipartimento 60
+Codice PL/SQL:
+
+sql
+DECLARE
+    v_count NUMBER; -- variable to store row count
+BEGIN
+    UPDATE employees
+    SET salary = salary * 1.10
+    WHERE department_id = 60; -- update 5 rows
+    
+    v_count := SQL%ROWCOUNT; -- how many rows changed
+    
+    DBMS_OUTPUT.PUT_LINE(v_count || ' rows updated'); -- shows updated
+    
+    COMMIT; -- save changes
+
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK; -- undo if error
+        DBMS_OUTPUT.PUT_LINE(SQLERRM); -- shows error message
+END; -- runs the block
+Perché usare entrambi?
+SQL = ottenere e modificare i dati
+
+PL/SQL = aggiungere logica, cicli e automazione sopra
+
+Insieme = meno chiamate al DB, codice più veloce e riutilizzabile
+
